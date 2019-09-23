@@ -86,7 +86,7 @@ const App = () => {
       await blogsService.create({author, title, url})
       await setErrorStyle('notification')
       await setErrorMessage(
-              `a new blog ${title} by ${author} added`
+        `a new blog ${title} by ${author} added`
       )
       await setTitle('')
       await setAuthor('')
