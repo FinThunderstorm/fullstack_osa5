@@ -35,22 +35,48 @@ const Blog = (props) => {
     }
   }
 
-
+  const handleDeleteBlog = (blogId, blog) => async (event) => {
+    event.preventDefault()
+    try{
+      console.log('blogId:', blogId)
+      if(window.confirm(`remove blog ${blog.title} by ${blog.author}`)){
+        await blogsService.remove(blogId)
+      }
+    } catch(e){
+      console.error(e.message)
+    }
+  }
 
   const showWhenVisible = { display: visible ? '' : 'none'}
 
-  return (
-    <div style={blogStyle}>
-      <div onClick={() => toggleVisibility()}>
-        {props.blog.title} {props.blog.author}
-        <div style={showWhenVisible}>
-          <div>{props.blog.url}</div>
-          <div>{props.blog.likes} likes <button onClick={handleLike(props.blog.id, props.blog)}>like</button></div>
-          <div>added by {props.blog.user.name}</div>
+  if(props.blog.user.id === window.localStorage.getItem('loggedBlogAppUser').id){
+    return (
+      <div style={blogStyle}>
+        <div onClick={() => toggleVisibility()}>
+          {props.blog.title} {props.blog.author}
+          <div style={showWhenVisible}>
+            <div>{props.blog.url}</div>
+            <div>{props.blog.likes} likes <button onClick={handleLike(props.blog.id, props.blog)}>like</button></div>
+            <div>added by {props.blog.user.name}</div>
+            <div><button onClick={handleDeleteBlog(props.blog.id, props.blog)}>remove</button></div>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return (
+      <div style={blogStyle}>
+        <div onClick={() => toggleVisibility()}>
+          {props.blog.title} {props.blog.author}
+          <div style={showWhenVisible}>
+            <div>{props.blog.url}</div>
+            <div>{props.blog.likes} likes <button onClick={handleLike(props.blog.id, props.blog)}>like</button></div>
+            <div>added by {props.blog.user.name}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Blog
