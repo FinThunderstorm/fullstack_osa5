@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/5d88f7009372ef12b4ea0d51
+Content-Type: application/json
+
+{
+    "user": "5d204cb2f940701dc210d087",
+    "title": "Testing new blogs 2",
+    "author": "mluukkai",
+    "url": "https://fullstackopen.com",
+    "likes": 1
+}
