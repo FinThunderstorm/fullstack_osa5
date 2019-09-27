@@ -11,7 +11,7 @@ const Blog = (props) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
+
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -22,11 +22,11 @@ const Blog = (props) => {
     event.preventDefault()
     try{
       const likedBlog = {
-        "title": blog.title,
-        "author": blog.author,
-        "url": blog.url,
-        "user": blog.user,
-        "likes": blog.likes + 1
+        'title': blog.title,
+        'author': blog.author,
+        'url': blog.url,
+        'user': blog.user,
+        'likes': blog.likes + 1
       }
       console.log('blogId: ',blogId)
       await blogsService.update(blogId, likedBlog)
@@ -47,7 +47,7 @@ const Blog = (props) => {
     }
   }
 
-  const showWhenVisible = { display: visible ? '' : 'none'}
+  const showWhenVisible = { display: visible ? '' : 'none' }
 
   if(props.blog.user.id === window.localStorage.getItem('loggedBlogAppUser').id){
     return (
@@ -63,7 +63,7 @@ const Blog = (props) => {
         </div>
       </div>
     )
-  } else {
+  } else{
     return (
       <div style={blogStyle}>
         <div onClick={() => toggleVisibility()}>

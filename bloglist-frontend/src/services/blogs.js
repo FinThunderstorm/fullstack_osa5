@@ -8,13 +8,13 @@ const setToken = newToken => {
 
 const getAll = () => {
   const request = axios.get(baseUrl)
-  console.log("tuotetaanko kutsua",request)
+  console.log('tuotetaanko kutsua',request)
   return request.then(response => response.data)
 }
 
 const create = async newBlog => {
   const config = {
-    headers: { Authorization: token},
+    headers: { Authorization: token },
   }
 
   const res = await axios.post(baseUrl, newBlog, config)
@@ -24,7 +24,7 @@ const create = async newBlog => {
 
 const remove = async id => {
   const config = {
-    headers: { Authorization: token},
+    headers: { Authorization: token },
   }
 
   const res = await axios.delete(`${ baseUrl }/${id}`, config)

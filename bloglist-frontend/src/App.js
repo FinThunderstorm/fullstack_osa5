@@ -1,10 +1,10 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import './App.css'
 import loginService from './services/login'
 import blogsService from './services/blogs'
-import BlogForm from './components/BlogForm';
-import Togglable from './components/Togglable';
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [ username, setUsername ] = useState('')
@@ -33,10 +33,10 @@ const App = () => {
   },[])
 
   useEffect(() => {
-    console.log("testu", user, user !== null)
+    console.log('testu', user, user !== null)
     if(user !== null){
       blogsService.getAll().then(initialBlogs => {
-        console.log("blokit: ",initialBlogs)
+        console.log('blokit: ',initialBlogs)
         setBlogs(initialBlogs)
       })
     }
@@ -61,7 +61,7 @@ const App = () => {
         password,
       })
 
-      
+
 
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogsService.setToken(user.token)
@@ -83,7 +83,7 @@ const App = () => {
     event.preventDefault()
     blogFormRef.current.toggleVisibility()
     try{
-      await blogsService.create({author, title, url})
+      await blogsService.create({ author, title, url })
       await setErrorStyle('notification')
       await setErrorMessage(
         `a new blog ${title} by ${author} added.`
@@ -92,17 +92,17 @@ const App = () => {
       await setAuthor('')
       await setUrl('')
       await setTimeout(() => {
-              setErrorMessage(null)
-              setErrorStyle('')
+        setErrorMessage(null)
+        setErrorStyle('')
       },5000)
-      
-      
+
+
     } catch(e){
       console.error(e.message)
     }
   }
 
- 
+
 
   if (user === null) {
     return (
@@ -112,21 +112,21 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-              <input
+            <input
               type="text"
               value={username}
               name="Username"
               onChange={(event) => setUsername(event.target.value)}
-              />
+            />
           </div>
           <div>
             password
-              <input
+            <input
               type="password"
               value={password}
               name="Password"
               onChange={(event) => setPassword(event.target.value)}
-              />
+            />
           </div>
           <div><button>login</button></div>
         </form>
@@ -141,7 +141,7 @@ const App = () => {
       <div>{user.name} logged in<button onClick={() => window.localStorage.removeItem('loggedBlogAppUser')}>log out</button></div>
       <h1>create new</h1>
       <Togglable buttonLabel='new blog' ref={blogFormRef}>
-      <BlogForm 
+        <BlogForm
           handleNewBlog={handleNewBlog}
           title={title}
           author={author}
@@ -150,7 +150,7 @@ const App = () => {
           handleAuthorChange={handleAuthorChange}
           handleUrlChange={handleUrlChange}
         />
-      </Togglable>  
+      </Togglable>
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog}/>
       )}
@@ -159,4 +159,4 @@ const App = () => {
 }
 
 
-export default App;
+export default App
