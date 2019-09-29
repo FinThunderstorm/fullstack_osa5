@@ -5,7 +5,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react'
 import SimpleBlog from '../components/SimpleBlog'
 let component
 
-
+afterEach(cleanup)
 
 
 test('has title & author', async () => {

@@ -52,9 +52,9 @@ const Blog = (props) => {
   if(props.blog.user.id === window.localStorage.getItem('loggedBlogAppUser').id){
     return (
       <div style={blogStyle}>
-        <div onClick={() => toggleVisibility()}>
+        <div className='blog' onClick={() => toggleVisibility()}>
           {props.blog.title} {props.blog.author}
-          <div style={showWhenVisible}>
+          <div className='info' style={showWhenVisible}>
             <div>{props.blog.url}</div>
             <div>{props.blog.likes} likes <button onClick={handleLike(props.blog.id, props.blog)}>like</button></div>
             <div>added by {props.blog.user.name}</div>
@@ -66,9 +66,9 @@ const Blog = (props) => {
   } else{
     return (
       <div style={blogStyle}>
-        <div onClick={() => toggleVisibility()}>
+        <div className='blog' onClick={() => toggleVisibility()}>
           {props.blog.title} {props.blog.author}
-          <div style={showWhenVisible}>
+          <div className='info' style={showWhenVisible}>
             <div>{props.blog.url}</div>
             <div>{props.blog.likes} likes <button onClick={handleLike(props.blog.id, props.blog)}>like</button></div>
             <div>added by {props.blog.user.name}</div>
