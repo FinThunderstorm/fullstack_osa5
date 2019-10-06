@@ -5,21 +5,18 @@ import loginService from './services/login'
 import blogsService from './services/blogs'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import { useField } from './hooks'
 
 const App = () => {
-  const [ username, setUsername ] = useState('')
-  const [ password, setPassword ] = useState('')
-  const [ title, setTitle ] = useState('')
-  const [ author, setAuthor ] = useState('')
-  const [ url, setUrl ] = useState('')
+  const username = useField('text')
+  const password = useField('password')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
   const [ user, setUser ] = useState(null)
   const [ blogs, setBlogs ] = useState([])
   const [ errorMessage, setErrorMessage ] = useState(null)
   const [ errorStyle, setErrorStyle ] = useState('')
-
-  const handleTitleChange = (event) => setTitle(event.target.value)
-  const handleAuthorChange = (event) => setAuthor(event.target.value)
-  const handleUrlChange = (event) => setUrl(event.target.value)
 
   const blogFormRef = React.createRef()
 
@@ -33,7 +30,7 @@ const App = () => {
   },[])
 
   useEffect(() => {
-    console.log('testu', user, user !== null)
+    console.log('user: ', user, user !== null)
     if(user !== null){
       blogsService.getAll().then(initialBlogs => {
         console.log('blokit: ',initialBlogs)
@@ -61,13 +58,12 @@ const App = () => {
         password,
       })
 
-
-
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogsService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
+      username.reset()
+      password.reset()
+
     } catch(e) {
       setErrorStyle('error')
       setErrorMessage('wrong username or password...')
@@ -86,11 +82,11 @@ const App = () => {
       await blogsService.create({ author, title, url })
       await setErrorStyle('notification')
       await setErrorMessage(
-        `a new blog ${title} by ${author} added.`
+        `a new blog ${title.value} by ${author.value} added.`
       )
-      await setTitle('')
-      await setAuthor('')
-      await setUrl('')
+      await title.reset()
+      await author.reset()
+      await url.reset()
       await setTimeout(() => {
         setErrorMessage(null)
         setErrorStyle('')
@@ -112,21 +108,11 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={(event) => setUsername(event.target.value)}
-            />
+            <input { ...username }/>
           </div>
           <div>
             password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
+            <input { ...password }/>
           </div>
           <div><button>login</button></div>
         </form>
@@ -146,9 +132,6 @@ const App = () => {
           title={title}
           author={author}
           url={url}
-          handleTitleChange={handleTitleChange}
-          handleAuthorChange={handleAuthorChange}
-          handleUrlChange={handleUrlChange}
         />
       </Togglable>
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>

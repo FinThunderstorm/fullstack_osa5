@@ -12,9 +12,15 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const create = async newBlog => {
+const create = async blog => {
   const config = {
     headers: { Authorization: token },
+  }
+
+  const newBlog = {
+    'title': blog.title.value,
+    'author': blog.author.value,
+    'url': blog.url.value
   }
 
   const res = await axios.post(baseUrl, newBlog, config)
