@@ -98,7 +98,14 @@ const App = () => {
     }
   }
 
-
+  const palautaResetitta = (resetillinen) => {
+    const resetiton = {
+      'value': resetillinen.value,
+      'type': resetillinen.type,
+      'onChange': resetillinen.onChange
+    }
+    return( resetiton )
+  }
 
   if (user === null) {
     return (
@@ -108,11 +115,11 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-            <input { ...username }/>
+            <input { ...palautaResetitta(username) }/>
           </div>
           <div>
             password
-            <input { ...password }/>
+            <input { ...palautaResetitta(password) }/>
           </div>
           <div><button>login</button></div>
         </form>
@@ -129,9 +136,9 @@ const App = () => {
       <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm
           handleNewBlog={handleNewBlog}
-          title={title}
-          author={author}
-          url={url}
+          title={palautaResetitta(title)}
+          author={palautaResetitta(author)}
+          url={palautaResetitta(url)}
         />
       </Togglable>
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
